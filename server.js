@@ -66,14 +66,6 @@ async function getMapsByToken(token) {
   }
 }
 
-async function deleteAllMaps() {
-  if (mapsCollection) {
-    await mapsCollection.deleteMany({});
-  } else {
-    memoryStore = {};
-  }
-}
-
 // Configuracion del servidor
 app.set('trust proxy', 1);
 
@@ -204,18 +196,6 @@ app.get('/api/mapas/:id', async function(req, res) {
     }
   } catch (error) {
     console.error('Error al obtener mapa:', error);
-    res.status(500).json({ success: false, error: 'Error interno' });
-  }
-});
-
-// API: Borrar todos los mapas de prueba
-app.delete('/api/mapas/limpiar', async function(req, res) {
-  try {
-    await deleteAllMaps();
-    console.log('Todos los mapas han sido eliminados.');
-    res.json({ success: true, message: 'Todos los mapas eliminados' });
-  } catch (error) {
-    console.error('Error al limpiar:', error);
     res.status(500).json({ success: false, error: 'Error interno' });
   }
 });
