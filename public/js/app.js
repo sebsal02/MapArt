@@ -79,43 +79,20 @@ function cambiarTab(tab) {
   }
 }
 
-function resizeImage(file, callback) {
-  var reader = new FileReader();
-  reader.onload = function(e) {
-    var img = new Image();
-    img.onload = function() {
-      var canvas = document.createElement('canvas');
-      var w = img.width;
-      var h = img.height;
-      var MAX = 1920; // 1080p resolution maximum for excellent quality
-
-      if (w > MAX || h > MAX) {
-        if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
-        else { w = Math.round(w * MAX / h); h = MAX; }
-      }
-      canvas.width = w;
-      canvas.height = h;
-      var ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, w, h);
-      callback(canvas.toDataURL('image/jpeg', 0.9)); // Alta calidad
-    };
-    img.src = e.target.result;
-  };
-  reader.readAsDataURL(file);
-}
-
 function previewImg(e, prevId) {
   var file = e.target.files[0];
   if (!file) return;
-  resizeImage(file, function(dataUrl) {
+  var reader = new FileReader();
+  reader.onload = function(evt) {
+    var dataUrl = evt.target.result;
     var img = document.getElementById(prevId);
     img.src = dataUrl;
     img.style.display = 'block';
     if (prevId === 'pvReal') imgRealData = dataUrl;
     if (prevId === 'pvIlus') imgIlusData = dataUrl;
-    // Limpiar el input para permitir resubir
     e.target.value = '';
-  });
+  };
+  reader.readAsDataURL(file);
 }
 
 function verImagen(src) {

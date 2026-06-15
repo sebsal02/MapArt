@@ -88,8 +88,8 @@ var apiLimiter = rateLimit({
 });
 app.use('/api/', apiLimiter);
 
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ limit: '10mb', extended: true }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -101,7 +101,7 @@ function sanitizeString(str) {
 
 function isValidBase64Image(str) {
   if (typeof str !== 'string') return false;
-  return str.startsWith('data:image/') && str.length < 5000000;
+  return str.startsWith('data:image/') && str.length < 50000000;
 }
 
 // API: Crear mapa
