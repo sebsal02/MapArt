@@ -4,14 +4,15 @@ let imgRealData = '', imgIlusData = '';
 
 // Sistema de Token Unico e Intransferible por dispositivo
 function getOrGenerateToken() {
-  let token = localStorage.getItem('mapArtUserToken');
+  var token = localStorage.getItem('mapArtUserToken');
   if (!token) {
-    token = 'usr-' + Date.now().toString(36) + '-' + Math.random().toString(36).substring(2);
+    var randomId = Math.floor(1000 + Math.random() * 9000);
+    token = 'Usuario-' + randomId;
     localStorage.setItem('mapArtUserToken', token);
   }
   return token;
 }
-const userToken = getOrGenerateToken();
+var userToken = getOrGenerateToken();
 
 window.onload = () => {
   // Cargar borrador local si existe
@@ -38,6 +39,13 @@ window.onload = () => {
   if (places.length > 0) {
     dibujarMarcadoresGuardados();
   }
+  
+  // Mostrar ID del usuario en la UI
+  var idDisplay = document.getElementById('userIdDisplay');
+  if (idDisplay) idDisplay.textContent = 'Tu ID: ' + userToken;
+  
+  // Precargar el historial de mapas en segundo plano para evitar pantalla vacia
+  cargarHistorialMapas();
 };
 
 function cambiarTab(tab) {
