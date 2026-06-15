@@ -173,6 +173,8 @@ app.get('/api/mis-mapas/:token', async function(req, res) {
         author: m.author,
         createdAt: m.createdAt,
         placeName: m.places && m.places.length > 0 ? m.places[0].name : 'Lugar sin nombre',
+        placeLat: m.places && m.places.length > 0 ? m.places[0].lat : 0,
+        placeLng: m.places && m.places.length > 0 ? m.places[0].lng : 0,
         placesCount: m.places ? m.places.length : 0
       });
     }
@@ -214,6 +216,31 @@ app.delete('/api/mapas/limpiar', async function(req, res) {
     res.json({ success: true, message: 'Todos los mapas eliminados' });
   } catch (error) {
     console.error('Error al limpiar:', error);
+    res.status(500).json({ success: false, error: 'Error interno' });
+  }
+});
+
+// API: Borrar un mapa especifico
+app.delete('/api/mapas/:id', async function(req, res) {
+  try {
+    var mapId = sanitizeString(req.params.id);
+    if (mapsCollection) {
+      var result = await mapsCollection.deleteOne({ mapId: mapId });
+      if (result.deletedCount === 1) {
+        res.json({ success: true, message: 'Mapa eliminado' });
+      } else {
+        res.status(404).json({ success: false, error: 'Mapa no encontrado' });
+      }
+    } else {
+      if (memoryStore[mapId]) {
+        delete memoryStore[mapId];
+        res.json({ success: true, message: 'Mapa eliminado' });
+      } else {
+        res.status(404).json({ success: false, error: 'Mapa no encontrado' });
+      }
+    }
+  } catch (error) {
+    console.error('Error al borrar mapa:', error);
     res.status(500).json({ success: false, error: 'Error interno' });
   }
 });

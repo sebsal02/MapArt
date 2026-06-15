@@ -162,7 +162,6 @@ async function agregarLugar() {
       // Actualizar historial
       cargarHistorialMapas();
       cambiarTab('historial');
-      mostrarQR(data.mapId);
     } else {
       toast('Error del servidor: ' + (data.error || 'Desconocido'), true);
     }
@@ -195,8 +194,10 @@ async function cargarHistorialMapas() {
       var html = '';
       for (var i = 0; i < data.mapas.length; i++) {
         var m = data.mapas[i];
-        html += '<div style="border:1px solid #ccc; padding:12px; border-radius:8px; background:#fff;">';
-        html += '<div style="font-weight:bold; font-size:1.1rem; color:var(--ochre);">' + (m.placeName || 'Lugar sin nombre') + '</div>';
+        html += '<div style="position:relative; border:1px solid #ccc; padding:12px; border-radius:8px; background:#fff;">';
+        html += '<button onclick="borrarMapaEnServidor(\'' + m.id + '\')" style="position:absolute; top:10px; right:10px; background:transparent; border:none; color:var(--rust); font-size:1.2rem; cursor:pointer;" title="Borrar Mapa">&#128465;</button>';
+        html += '<div style="font-weight:bold; font-size:1.1rem; color:var(--ochre); padding-right:25px;">' + (m.placeName || 'Lugar sin nombre') + '</div>';
+        html += '<div style="font-size:0.9rem; margin-top:4px;">Ubicacion: <b>Lat ' + m.placeLat.toFixed(4) + ', Lng ' + m.placeLng.toFixed(4) + '</b></div>';
         html += '<div style="font-size:0.9rem; margin-top:4px;">Autor: <b>' + m.author + '</b></div>';
         html += '<div style="font-size:0.8rem; color:#666; margin-top:4px;">Creado: ' + new Date(m.createdAt).toLocaleDateString() + '</div>';
         html += '<div style="display:flex; gap:10px; margin-top:10px;">';
@@ -211,6 +212,22 @@ async function cargarHistorialMapas() {
     }
   } catch(e) {
     div.innerHTML = 'Error de conexion con el servidor. Verifica que el servidor este activo.';
+  }
+}
+
+async function borrarMapaEnServidor(id) {
+  if (!confirm('¿Estás seguro de que deseas borrar este mapa? Esta acción no se puede deshacer.')) return;
+  try {
+    var res = await fetch('/api/mapas/' + id, { method: 'DELETE' });
+    var data = await res.json();
+    if (data.success) {
+      toast('Mapa eliminado correctamente.');
+      cargarHistorialMapas();
+    } else {
+      toast('Error al borrar: ' + (data.error || 'Desconocido'), true);
+    }
+  } catch (e) {
+    toast('Error de conexión al borrar el mapa.', true);
   }
 }
 
@@ -230,9 +247,6 @@ function mostrarQR(mapId) {
     colorLight: '#ffffff',
     correctLevel: QRCode.CorrectLevel.L
   });
-
-  var link = document.getElementById('qrLink');
-  link.href = finalUrl;
 }
 
 // Control del Slider Comparador
