@@ -41,15 +41,22 @@ window.onload = () => {
 };
 
 function cambiarTab(tab) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+  // Desactivar todos los tabs y paneles
+  var allTabs = document.querySelectorAll('.tab');
+  var allPanels = document.querySelectorAll('.panel');
+  var i;
+  for (i = 0; i < allTabs.length; i++) { allTabs[i].classList.remove('on'); }
+  for (i = 0; i < allPanels.length; i++) { allPanels[i].classList.remove('on'); }
   
-  var tabBtn = document.querySelector('.tab[onclick="cambiarTab(\'' + tab + '\')"]');
-  var tabPanel = document.getElementById('tab-' + tab);
+  // Activar el tab correcto por data-tab
+  var activeBtn = document.querySelector('.tab[data-tab="' + tab + '"]');
+  if (activeBtn) activeBtn.classList.add('on');
   
-  if (tabBtn) tabBtn.classList.add('on');
-  if (tabPanel) tabPanel.classList.add('on');
+  // Activar el panel correspondiente
+  var activePanel = document.getElementById('tab-' + tab);
+  if (activePanel) activePanel.classList.add('on');
   
+  // Cargar historial automaticamente
   if (tab === 'historial') {
     cargarHistorialMapas();
   }
