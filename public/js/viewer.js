@@ -65,7 +65,10 @@ async function mostrarMapa(mapData) {
   const places = mapData.places || [];
   
   map = L.map('map').setView(places.length ? [places[0].lat, places[0].lng] : [19.4326, -99.1332], 16);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png', {
+    maxZoom: 20,
+    attribution: '&copy; <a href="https://carto.com/">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
+  }).addTo(map);
 
   const placesDiv = document.getElementById('placesList');
   

@@ -13,6 +13,8 @@ window.onload = async function () {
         var m = data.mapas[i];
         var card = document.createElement('div');
         card.className = 'galeria-card';
+        // Staggered animation delay for each card
+        card.style.animationDelay = (i * 0.08) + 's';
 
         var descHtml = '';
         if (m.placeDescription) {

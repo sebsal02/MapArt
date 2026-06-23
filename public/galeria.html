@@ -57,14 +57,21 @@
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
       overflow: hidden;
-      transition: all 0.3s ease;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
       display: flex;
       flex-direction: column;
+      opacity: 0;
+      animation: cardSlideIn 0.5s ease forwards;
+    }
+
+    @keyframes cardSlideIn {
+      from { opacity: 0; transform: translateY(24px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     .galeria-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), 0 0 24px var(--accent-glow);
       border-color: var(--border-hover);
     }
 
@@ -81,6 +88,11 @@
       font-size: 1.15rem;
       font-weight: 700;
       color: var(--accent-light);
+      transition: color 0.2s ease;
+    }
+
+    .galeria-card:hover .galeria-card-name {
+      color: #fff;
     }
 
     .galeria-card-desc {
@@ -118,12 +130,15 @@
       border-radius: var(--radius);
       text-decoration: none;
       font-size: 0.88rem;
-      transition: all 0.25s ease;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
     }
 
     .galeria-card-action a:hover {
       background: var(--accent-light);
-      box-shadow: 0 0 16px var(--accent-glow);
+      box-shadow: 0 0 20px var(--accent-glow);
+      transform: translateY(-1px);
     }
 
     #loading {
@@ -131,12 +146,19 @@
       padding: 60px 20px;
       font-size: 1rem;
       color: var(--text-muted);
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .empty-state {
       text-align: center;
       padding: 80px 20px;
       color: var(--text-muted);
+      animation: fadeIn 0.6s ease;
     }
 
     .empty-state h2 {
@@ -144,6 +166,10 @@
       font-size: 1.4rem;
       color: var(--text-secondary);
       margin-bottom: 8px;
+    }
+
+    .galeria-header {
+      animation: fadeIn 0.5s ease;
     }
 
     @media (max-width: 700px) {
