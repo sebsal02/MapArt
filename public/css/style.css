@@ -335,9 +335,9 @@ header {
   animation: fadeIn 0.6s ease;
 }
 
-/* Dark theme Leaflet overrides */
+/* Dark theme Leaflet overrides - Google Maps Dark Style */
 .leaflet-tile-pane {
-  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+  filter: invert(100%) hue-rotate(180deg) brightness(85%) contrast(115%) sepia(10%) saturate(130%);
 }
 .leaflet-control-attribution {
   background: var(--bg-surface) !important;

@@ -184,6 +184,7 @@ app.get('/api/mis-mapas/:token', async function(req, res) {
         placeDescription: m.places && m.places.length > 0 ? (m.places[0].description || '') : '',
         placeLat: m.places && m.places.length > 0 ? m.places[0].lat : 0,
         placeLng: m.places && m.places.length > 0 ? m.places[0].lng : 0,
+        placeImg: m.places && m.places.length > 0 ? m.places[0].ilusImg : null,
         placesCount: m.places ? m.places.length : 0
       });
     }
@@ -211,6 +212,7 @@ app.get('/api/todos-los-mapas', async function(req, res) {
         placeDescription: m.places && m.places.length > 0 ? (m.places[0].description || '') : '',
         placeLat: m.places && m.places.length > 0 ? m.places[0].lat : 0,
         placeLng: m.places && m.places.length > 0 ? m.places[0].lng : 0,
+        placeImg: m.places && m.places.length > 0 ? m.places[0].ilusImg : null,
         placesCount: m.places ? m.places.length : 0
       });
     }

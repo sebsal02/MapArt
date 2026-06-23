@@ -21,7 +21,13 @@ window.onload = async function () {
           descHtml = '<div class="galeria-card-desc">' + m.placeDescription + '</div>';
         }
 
+        var imgHtml = '';
+        if (m.placeImg) {
+          imgHtml = '<img src="' + m.placeImg + '" class="galeria-card-img" alt="Preview" loading="lazy">';
+        }
+
         card.innerHTML =
+          imgHtml +
           '<div class="galeria-card-body">' +
           '<div class="galeria-card-name">' + (m.placeName || 'Lugar sin nombre') + '</div>' +
           descHtml +

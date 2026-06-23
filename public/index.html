@@ -60,9 +60,12 @@
 
       <!-- PANEL TODOS LOS MAPAS -->
       <div class="panel" id="tab-historial">
-        <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
-          <button class="btn btn-blue" onclick="cargarHistorialMapas()" style="flex:1;">Actualizar</button>
-          <button class="btn btn-green" onclick="mostrarQRGlobal()" style="flex:1;">QR de la Galeria</button>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <a href="galeria.html" class="btn btn-ochre" style="text-align:center; text-decoration:none;">Ir a la Galeria</a>
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+            <button class="btn btn-blue" onclick="cargarHistorialMapas()" style="flex:1;">Actualizar</button>
+            <button class="btn btn-green" onclick="mostrarQRGlobal()" style="flex:1;">QR de la Galeria</button>
+          </div>
         </div>
         <div id="listaHistorial" style="margin-top:10px; display:flex; flex-direction:column; gap:10px;">Cargando...
         </div>
