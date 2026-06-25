@@ -115,7 +115,7 @@ async function agregarLugar() {
   if (!imgRealData || !imgIlusData) return toast('Ambas imagenes son requeridas.', true);
 
   var btn = document.getElementById('btnGuardarLugar');
-  btn.innerHTML = 'Guardando en el servidor...';
+  btn.innerHTML = 'Guardando';
   btn.disabled = true;
 
   var place = {
@@ -214,7 +214,7 @@ async function cargarHistorialMapas() {
       }
       div.innerHTML = html;
     } else {
-      div.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted);">Aun no hay mapas guardados en el servidor.</div>';
+      div.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted);">Aun no hay mapas guardados.</div>';
     }
   } catch (e) {
     div.innerHTML = '<div style="text-align:center; padding:20px; color:var(--danger);">Error de conexion con el servidor.</div>';
