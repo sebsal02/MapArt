@@ -26,7 +26,7 @@ async function initDB() {
     var db = client.db('artmap');
     mapsCollection = db.collection('maps');
     console.log('Conectado a MongoDB Atlas correctamente. Los datos son permanentes.');
-  } catch(err) {
+  } catch (err) {
     console.error('Error conectando a MongoDB:', err.message);
     console.log('Usando almacenamiento en memoria como respaldo.');
   }
@@ -111,7 +111,7 @@ function isValidBase64Image(str) {
 }
 
 // API: Crear mapa
-app.post('/api/mapas', async function(req, res) {
+app.post('/api/mapas', async function (req, res) {
   try {
     var body = req.body;
     var author = body.author;
@@ -167,7 +167,7 @@ app.post('/api/mapas', async function(req, res) {
 });
 
 // API: Obtener mapas por token de usuario
-app.get('/api/mis-mapas/:token', async function(req, res) {
+app.get('/api/mis-mapas/:token', async function (req, res) {
   try {
     var token = sanitizeString(req.params.token);
     var maps = await getMapsByToken(token);
@@ -197,7 +197,7 @@ app.get('/api/mis-mapas/:token', async function(req, res) {
 });
 
 // API: Obtener TODOS los mapas de TODOS los usuarios
-app.get('/api/todos-los-mapas', async function(req, res) {
+app.get('/api/todos-los-mapas', async function (req, res) {
   try {
     var maps = await getAllMaps();
     var allMaps = [];
@@ -224,11 +224,11 @@ app.get('/api/todos-los-mapas', async function(req, res) {
 });
 
 // API: Obtener un mapa especifico (para el visor del profesor)
-app.get('/api/mapas/:id', async function(req, res) {
+app.get('/api/mapas/:id', async function (req, res) {
   try {
     var mapId = sanitizeString(req.params.id);
     var mapDoc = await getMap(mapId);
-    
+
     if (mapDoc) {
       var safeMap = {
         author: mapDoc.author,
@@ -246,7 +246,7 @@ app.get('/api/mapas/:id', async function(req, res) {
 });
 
 // API: Borrar un mapa especifico
-app.delete('/api/mapas/:id', async function(req, res) {
+app.delete('/api/mapas/:id', async function (req, res) {
   try {
     var mapId = sanitizeString(req.params.id);
     if (mapsCollection) {
@@ -271,7 +271,7 @@ app.delete('/api/mapas/:id', async function(req, res) {
 });
 
 // API: Diagnostico del servidor
-app.get('/api/status', function(req, res) {
+app.get('/api/status', function (req, res) {
   res.json({
     success: true,
     database: mapsCollection ? 'MongoDB Atlas (permanente)' : 'Memoria (temporal)',
@@ -280,16 +280,16 @@ app.get('/api/status', function(req, res) {
 });
 
 // Iniciar servidor despues de conectar a la base de datos
-initDB().then(function() {
-  app.listen(PORT, function() {
+initDB().then(function () {
+  app.listen(PORT, function () {
     console.log('Servidor MapArt iniciado en puerto ' + PORT);
     if (mapsCollection) {
-      console.log('Base de datos: MongoDB Atlas (PERMANENTE - los datos nunca se pierden)');
+      console.log('Base de datos: MongoDB Atlas ');
     } else {
-      console.log('Base de datos: Memoria RAM (TEMPORAL - configure MONGO_URI para persistencia)');
+      console.log('Base de datos: Memoria RAM ');
     }
   });
-}).catch(function(err) {
+}).catch(function (err) {
   console.error('Error fatal:', err);
   process.exit(1);
 });
