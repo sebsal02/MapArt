@@ -126,9 +126,12 @@
     .galeria-card-action {
       padding: 14px 18px;
       border-top: 1px solid var(--border);
+      display: flex;
+      gap: 10px;
     }
 
-    .galeria-card-action a {
+    .galeria-card-action a.btn-view {
+      flex: 1;
       display: block;
       text-align: center;
       padding: 10px;
@@ -143,9 +146,34 @@
       overflow: hidden;
     }
 
-    .galeria-card-action a:hover {
+    .galeria-card-action a.btn-view:hover {
       background: var(--accent-light);
       box-shadow: 0 0 20px var(--accent-glow);
+      transform: translateY(-1px);
+    }
+
+    .galeria-card-action button.btn-delete {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 14px;
+      background: rgba(255, 68, 102, 0.12);
+      color: var(--danger);
+      border: 1px solid rgba(255, 68, 102, 0.3);
+      font-weight: 600;
+      border-radius: var(--radius);
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .galeria-card-action button.btn-delete:hover {
+      background: var(--danger);
+      color: #fff;
+      border-color: var(--danger);
+      box-shadow: 0 0 20px rgba(255, 68, 102, 0.4);
       transform: translateY(-1px);
     }
 
