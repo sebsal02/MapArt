@@ -8,7 +8,8 @@
     content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.basemaps.cartocdn.com https://*.tile.openstreetmap.org; connect-src 'self' https://nominatim.openstreetmap.org;">
   <title>MapArt - Creador de Mapas</title>
   <link rel="icon" type="image/png" href="favicon.png">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800&display=swap"
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="css/style.css">
@@ -17,7 +18,7 @@
 <body>
 
   <header style="position:relative; display:flex; justify-content:space-between; align-items:center; padding:0 24px;">
-    <div class="logo">Map<span>Art</span> <span class="logo-sub">Panel del Alumno</span></div>
+    <div class="logo">Map<span>Art</span> <span class="logo-sub"></span></div>
     <div id="userIdDisplay"
       style="color:var(--text-muted); font-weight:600; font-size:0.85rem; border:1px solid var(--border); padding:6px 16px; border-radius:20px; background:var(--bg-card);">
     </div>
@@ -37,8 +38,9 @@
 
         <div class="step-card">2. Ingresa los datos del lugar.</div>
         <input class="inp" id="pNombre" placeholder="Ej: Catedral de la Ciudad">
-        <input class="inp" id="alumnoNombre" placeholder="Tu Nombre Completo (Autor)">
-        <textarea class="inp" id="pDescripcion" placeholder="Descripcion del lugar (opcional)" rows="3" style="resize:vertical; font-family:inherit;"></textarea>
+        <input class="inp" id="autorNombre" placeholder="Tu Nombre Completo (Autor)">
+        <textarea class="inp" id="pDescripcion" placeholder="Descripcion del lugar (opcional)" rows="3"
+          style="resize:vertical; font-family:inherit;"></textarea>
 
         <div class="step-card">3. Sube las imagenes correspondientes.</div>
 
@@ -61,7 +63,8 @@
       <!-- PANEL TODOS LOS MAPAS -->
       <div class="panel" id="tab-historial">
         <div style="display:flex; flex-direction:column; gap:10px;">
-          <a href="galeria.html" class="btn btn-ochre" style="text-align:center; text-decoration:none;">Ir a la Galeria</a>
+          <a href="galeria.html" class="btn btn-ochre" style="text-align:center; text-decoration:none;">Ir a la
+            Galeria</a>
           <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
             <button class="btn btn-blue" onclick="cargarHistorialMapas()" style="flex:1;">Actualizar</button>
             <button class="btn btn-green" onclick="mostrarQRGlobal()" style="flex:1;">QR de la Galeria</button>
@@ -119,7 +122,7 @@
       <button onclick="document.getElementById('modalQR').classList.remove('on')" class="close-btn"
         style="position:absolute; top:12px; right:15px; background:var(--danger); border-radius:50%; width:40px; height:40px; display:flex; justify-content:center; align-items:center; font-size:1.5rem; font-weight:bold; box-shadow:0 2px 5px rgba(0,0,0,0.2);">X</button>
       <h3 style="margin-bottom:10px; color:var(--accent);">Codigo QR — Galeria de Mapas</h3>
-      <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">Escanea para ver todos los mapas de todos los alumnos.</p>
+      <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">Escanea para ver la galeria con todos los mapas creados.</p>
       <div id="qrCanvas"
         style="background:#fff; padding:16px; border:2px solid var(--accent); border-radius:var(--radius); display:inline-block; margin-bottom:20px;">
       </div>

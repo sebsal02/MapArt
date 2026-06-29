@@ -49,7 +49,7 @@ window.onload = async function () {
       document.getElementById('galeriaGrid').style.display = 'none';
       var empty = document.createElement('div');
       empty.className = 'empty-state';
-      empty.innerHTML = '<h2>No hay mapas todavia</h2><p>Los alumnos aun no han creado mapas.</p>';
+      empty.innerHTML = '<h2>No hay mapas todavia</h2><p>Aun no se han creado mapas.</p>';
       document.body.appendChild(empty);
     }
   } catch (e) {
@@ -83,7 +83,7 @@ window.eliminarMapa = async function (id, btn) {
             grid.style.display = 'none';
             var empty = document.createElement('div');
             empty.className = 'empty-state';
-            empty.innerHTML = '<h2>No hay mapas todavia</h2><p>Los alumnos aun no han creado mapas.</p>';
+            empty.innerHTML = '<h2>No hay mapas todavia</h2><p>Aun no se han creado mapas.</p>';
             document.body.appendChild(empty);
           }
         }, 400);

@@ -30,7 +30,7 @@ window.onload = () => {
   // Precargar ultimo autor usado
   var lastAuthor = localStorage.getItem('mapArtLastAuthor');
   if (lastAuthor) {
-    var authorInput = document.getElementById('alumnoNombre');
+    var authorInput = document.getElementById('autorNombre');
     if (authorInput) {
       authorInput.value = lastAuthor;
       setTimeout(() => toast('Nombre de autor autocompletado.'), 1000);
@@ -106,7 +106,7 @@ function verImagen(src) {
 
 async function agregarLugar() {
   var name = document.getElementById('pNombre').value.trim();
-  var authorName = document.getElementById('alumnoNombre').value.trim();
+  var authorName = document.getElementById('autorNombre').value.trim();
   var description = document.getElementById('pDescripcion').value.trim();
 
   if (!selectedCoord) return toast('Seleccione un lugar en el mapa.', true);
