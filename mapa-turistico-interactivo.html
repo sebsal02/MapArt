@@ -95,7 +95,7 @@ header{background:var(--ink);color:var(--cream);padding:13px 20px;display:flex;a
 .pres-header{background:var(--ink);color:var(--cream);padding:16px 18px;border-bottom:4px solid var(--ochre);}
 .pres-logo{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;}
 .pres-logo span{color:var(--ochre);}
-.pres-alumno{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:.85;margin-top:2px;}
+.pres-autor{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:.85;margin-top:2px;}
 .pres-mapa{width:100%;height:280px;z-index:1;}
 .pres-lugares{padding:14px;display:flex;flex-direction:column;gap:14px;}
 .lugar-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 3px 16px rgba(26,18,9,.12);border:1.5px solid rgba(26,18,9,.07);}
@@ -236,7 +236,7 @@ header{background:var(--ink);color:var(--cream);padding:13px 20px;display:flex;a
         <div class="share-block">
           <div class="share-title">📛 Tu nombre (para el archivo)</div>
           <div class="fg"><span class="lbl">Nombre del autor</span>
-            <input class="inp" id="nombreAlumno" placeholder="Ej: Ana García">
+            <input class="inp" id="nombreAutor" placeholder="Ej: Ana García">
           </div>
           <button class="btn btn-green" style="width:100%;justify-content:center" onclick="guardarMapa()">💾 Guardar mi mapa</button>
         </div>
@@ -282,7 +282,7 @@ header{background:var(--ink);color:var(--cream);padding:13px 20px;display:flex;a
 <div class="vista" id="vistaPresentacion">
   <div class="pres-header">
     <div class="pres-logo">Map<span>Art</span></div>
-    <div class="pres-alumno" id="presAlumnoNombre">Cargando mapa…</div>
+    <div class="pres-autor" id="presAutorNombre">Cargando mapa…</div>
   </div>
   <div id="presMapaWrap" style="width:100%;height:280px;position:relative;z-index:1;"></div>
   <div class="pres-lugares" id="presLugares"></div>
@@ -499,8 +499,8 @@ function cambiarTab(n){
 // ════════════════════════════════════════
 function guardarMapa(){
   if(!lugares.length){toast('⚠️ Agrega al menos un lugar',true);return;}
-  const nombre=(document.getElementById('nombreAlumno').value.trim()||'mi-mapa').replace(/\s+/g,'-');
-  const datos=JSON.stringify({v:'2',alumno:nombre,lugares});
+  const nombre=(document.getElementById('nombreAutor').value.trim()||'mi-mapa').replace(/\s+/g,'-');
+  const datos=JSON.stringify({v:'2',autor:nombre,alumno:nombre,lugares});
   const blob=new Blob([datos],{type:'application/octet-stream'});
   const a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
@@ -526,7 +526,7 @@ function cargarMapa(ev){
       lugares.forEach(l=>ponerMarcadorEditor(l));
       renderLista();
       if(lugares.length)mapaLeaflet.flyTo([lugares[0].lat,lugares[0].lng],13);
-      if(d.alumno)document.getElementById('nombreAlumno').value=d.alumno;
+      if(d.autor||d.alumno)document.getElementById('nombreAutor').value=d.autor||d.alumno;
       toast(`✅ ${lugares.length} lugares cargados`);
       cambiarTab('lista');
     }catch{toast('❌ No se pudo abrir ese archivo',true);}
@@ -544,7 +544,7 @@ function generarQR() {
 
   // Construir datos livianos (sin fotos full, solo miniatura)
   // Las imágenes se comprimen a 200px para que quepan en la URL
-  const alumno = document.getElementById('nombreAlumno').value.trim() || 'Alumno';
+  const autor = document.getElementById('nombreAutor').value.trim() || 'Autor';
 
   // Comprimir imágenes a thumbnail pequeño para la URL
   Promise.all(lugares.map(l => Promise.all([
@@ -552,7 +552,7 @@ function generarQR() {
     comprimirImagen(l.fotoIlus, 300)
   ]).then(([fr, fi]) => ({ ...l, fotoReal: fr, fotoIlus: fi }))))
   .then(lugaresComp => {
-    const payload = { alumno, lugares: lugaresComp };
+    const payload = { autor, alumno: autor, lugares: lugaresComp };
     const json = JSON.stringify(payload);
 
     // Codificar en base64 y poner en el hash
@@ -588,10 +588,10 @@ function generarQR() {
 
     // Guardar URL para descargar/imprimir
     window._qrUrl = urlFinal;
-    window._qrAlumno = alumno;
+    window._qrAutor = autor;
 
     document.getElementById('qrMsg').textContent =
-      `✅ QR listo para ${alumno}. Al escanearlo, cualquier celular abre tu mapa completo.`;
+      `✅ QR listo para ${autor}. Al escanearlo, cualquier celular abre tu mapa completo.`;
 
     toast('📲 ¡QR generado! Ya puedes escanearlo');
   });
@@ -622,7 +622,7 @@ function descargarQR() {
   const img = document.getElementById('qrDiv').querySelector('img');
   if (!img) { toast('⚠️ Primero genera el QR', true); return; }
   const a = document.createElement('a');
-  a.download = `qr-${window._qrAlumno||'mapa'}.png`;
+  a.download = `qr-${window._qrAutor||'mapa'}.png`;
   a.href = img.src;
   a.click();
 }
@@ -630,11 +630,11 @@ function descargarQR() {
 function imprimirQR() {
   const img = document.getElementById('qrDiv').querySelector('img');
   if (!img) { toast('⚠️ Primero genera el QR', true); return; }
-  const alumno = window._qrAlumno || '';
+  const autor = window._qrAutor || '';
   const w = window.open('');
   w.document.write(`<!DOCTYPE html><html><body style="text-align:center;padding:48px;font-family:sans-serif">
     <h2 style="margin-bottom:4px">MapArt — Mapa Turístico</h2>
-    <p style="opacity:.5;font-size:14px;margin-bottom:24px">${alumno}</p>
+    <p style="opacity:.5;font-size:14px;margin-bottom:24px">${autor}</p>
     <img src="${img.src}" style="width:260px;height:260px"><br>
     <p style="font-size:12px;opacity:.4;margin-top:16px">Escanea para ver el mapa interactivo con las ilustraciones</p>
     <script>window.onload=function(){window.print();}<\/script>
@@ -658,11 +658,11 @@ function cargarPresentacionDesdeHash(hash) {
 }
 
 function mostrarPresentacion(datos) {
-  const alumno = datos.alumno || 'Alumno';
+  const autor = datos.autor || datos.alumno || 'Autor';
   const lgs = datos.lugares || [];
 
-  document.getElementById('presAlumnoNombre').textContent = `Mapa de: ${alumno}`;
-  document.title = `MapArt — ${alumno}`;
+  document.getElementById('presAutorNombre').textContent = `Mapa de: ${autor}`;
+  document.title = `MapArt — ${autor}`;
 
   // Mapa en presentación
   const mapaDiv = document.getElementById('presMapaWrap');

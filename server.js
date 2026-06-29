@@ -8,6 +8,7 @@ var MongoClient = require('mongodb').MongoClient;
 var app = express();
 var PORT = process.env.PORT || 3000;
 var MONGO_URI = process.env.MONGO_URI || null;
+var DB_NAME = process.env.DB_NAME || 'mapart';
 
 var mapsCollection = null;
 
@@ -23,7 +24,7 @@ async function initDB() {
   try {
     var client = new MongoClient(MONGO_URI);
     await client.connect();
-    var db = client.db('artmap');
+    var db = client.db(DB_NAME);
     mapsCollection = db.collection('maps');
     console.log('Conectado a MongoDB Atlas correctamente. Los datos son permanentes.');
   } catch (err) {

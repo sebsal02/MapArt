@@ -1,5 +1,5 @@
 {
-  "name": "artmap",
+  "name": "mapart",
   "version": "1.0.0",
   "description": "Mapa interactivo turistico",
   "main": "server.js",
