@@ -8,7 +8,7 @@ var MongoClient = require('mongodb').MongoClient;
 var app = express();
 var PORT = process.env.PORT || 3000;
 var MONGO_URI = process.env.MONGO_URI || null;
-var DB_NAME = process.env.DB_NAME || 'mapart';
+var DB_NAME = process.env.DB_NAME || 'artmap';
 
 var mapsCollection = null;
 
@@ -26,7 +26,7 @@ async function initDB() {
     await client.connect();
     var db = client.db(DB_NAME);
     mapsCollection = db.collection('maps');
-    console.log('Conectado a MongoDB Atlas correctamente. Los datos son permanentes.');
+    console.log('Conectado a MongoDB Atlas correctamente en la base de datos "' + db.databaseName + '". Los datos son permanentes.');
   } catch (err) {
     console.error('Error conectando a MongoDB:', err.message);
     console.log('Usando almacenamiento en memoria como respaldo.');
